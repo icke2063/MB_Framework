@@ -39,6 +39,7 @@ public:
 	MBVirtualRTUSlave(uint8_t ID):SlaveID(ID){}
 	virtual ~MBVirtualRTUSlave(){};
 	uint8_t getSlaveID(void){return SlaveID;}
+	virtual uint8_t getType( void ){return 0xFF;}
 
 	/**
 	 * local list of used handler addressed by MB register

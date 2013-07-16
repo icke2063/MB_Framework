@@ -77,8 +77,8 @@ public:
 
 	/**
 	 * @brief set range of associated handler area
-	 * @param start	:	start of associated area
-	 * @param stop	:	stop of associated area
+	 * @param start	:	start register of associated area
+	 * @param stop	:	stop register of associated area
 	 * @return		:	if range settings useable -> true else false
 	 */
 	virtual bool setRange(uint16_t start, uint16_t stop) {

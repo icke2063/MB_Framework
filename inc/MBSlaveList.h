@@ -40,11 +40,19 @@ public:
 	MBSlaveList(){};
 	virtual ~MBSlaveList(){};
 
+	virtual void addSlave(uint8_t index, MBVirtualRTUSlave *newSlave) = 0;
+	virtual MBVirtualRTUSlave *removeSlave(uint8_t index) = 0;
+	virtual void deleteSlave(uint8_t index) = 0;
 
+	virtual MBVirtualRTUSlave *getSlave(uint8_t index) = 0;
+
+	virtual map<uint8_t,MBVirtualRTUSlave*> *getList( void ){return &m_slavelist;}
+
+protected:
 	/**
 	 * map of virtual slave object pointers addressed by slaveID
 	 */
-	map<uint8_t,MBVirtualRTUSlave*> slavelist;
+	map<uint8_t,MBVirtualRTUSlave*> m_slavelist;
 	/**
 	 * lock for slavelist
 	 */
