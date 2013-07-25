@@ -74,14 +74,14 @@ public:
  */
 
 enum worker_status{
-	idle=0x00,
-	running=0x01,
-	finished=0x02
+	worker_idle=0x00,
+	worker_running=0x01,
+	worker_finished=0x02
 };
 class MBWorkerThread {
 public:
 	MBWorkerThread(deque<MBFunctor *> *functor_queue, MBMutex *functor_lock):
-		p_functor_queue(functor_queue),p_functor_lock(functor_lock),m_status(idle){};
+		p_functor_queue(functor_queue),p_functor_lock(functor_lock),m_status(worker_idle){};
 	virtual ~MBWorkerThread(){};
 	worker_status m_status;					//status of current thread
 
