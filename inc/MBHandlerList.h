@@ -23,6 +23,7 @@
 #ifndef MBHANDLERLIST_H_
 #define MBHANDLERLIST_H_
 
+#include "stddef.h"
 #include "stdint.h"
 #include "list"
 using namespace std;
@@ -34,7 +35,7 @@ namespace MB_Framework {
 
 class MBHandlerList {
 public:
-	MBHandlerList(){}
+	MBHandlerList():p_handlerlist_lock(NULL){}
 	virtual ~MBHandlerList(){}
 
 	/**

@@ -36,9 +36,9 @@ namespace MB_Framework {
 
 class MBVirtualRTUSlave {
 public:
-	MBVirtualRTUSlave(uint8_t ID):SlaveID(ID){}
+	MBVirtualRTUSlave(uint8_t SlaveAddr):_SlaveAddr(SlaveAddr){}
 	virtual ~MBVirtualRTUSlave(){};
-	uint8_t getSlaveID(void){return SlaveID;}
+	uint8_t getSlaveAddr(void){return _SlaveAddr;}
 	virtual uint8_t getType( void ){return 0xFF;}
 
 	/**
@@ -47,9 +47,9 @@ public:
 	map<uint16_t,MBHandlerInt*> m_handlerlist;
 private:
 	/**
-	 * ID of associated RTU slave
+	 * Address of associated RTU slave
 	 */
-	uint8_t SlaveID;
+	uint8_t _SlaveAddr;
 };
 
 } /* namespace MB_Framework */

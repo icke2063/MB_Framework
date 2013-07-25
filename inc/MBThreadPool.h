@@ -72,11 +72,18 @@ public:
  * and call their functor function.
  * The implementation has to create for each object of this class an own thread.
  */
+
+enum worker_status{
+	idle=0x00,
+	running=0x01,
+	finished=0x02
+};
 class MBWorkerThread {
 public:
 	MBWorkerThread(deque<MBFunctor *> *functor_queue, MBMutex *functor_lock):
-		p_functor_queue(functor_queue),p_functor_lock(functor_lock){};
+		p_functor_queue(functor_queue),p_functor_lock(functor_lock),m_status(idle){};
 	virtual ~MBWorkerThread(){};
+	worker_status m_status;					//status of current thread
 
 protected:
 	deque<MBFunctor *> *p_functor_queue;	//pointer to queue of MBThreadPool functor list
@@ -106,7 +113,7 @@ public:
 	 */
 	void setLowWatermark(uint8_t low) {
 		LowWatermark =
-				((low > 0) && (low < HighWatermark)) ? low : LowWatermark;
+				((low < HighWatermark)) ? low : HighWatermark;
 	}
 	/**
 	 * get low count of WorkerThreads
@@ -120,7 +127,7 @@ public:
 	 */
 	void setHighWatermark(uint8_t high){
 		HighWatermark =
-				((high > LowWatermark) && (high < MBTHREADPOOL_MAX)) ? high : HighWatermark;
+				((high > LowWatermark) && (high < MBTHREADPOOL_MAX)) ? high : MBTHREADPOOL_MAX;
 	}
 
 	/**

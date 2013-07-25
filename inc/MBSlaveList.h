@@ -26,6 +26,7 @@
 #ifndef MBSLAVELIST_H_
 #define MBSLAVELIST_H_
 
+#include "stddef.h"
 #include "stdint.h"
 #include "map"
 using namespace std;
@@ -37,7 +38,7 @@ namespace MB_Framework {
 
 class MBSlaveList {
 public:
-	MBSlaveList(){};
+	MBSlaveList():p_slavelist_lock(NULL){};
 	virtual ~MBSlaveList(){};
 
 	virtual void addSlave(uint8_t index, MBVirtualRTUSlave *newSlave) = 0;
