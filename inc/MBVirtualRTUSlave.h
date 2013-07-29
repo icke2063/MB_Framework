@@ -28,9 +28,11 @@
 
 #include "stdint.h"
 #include <map>
+#include <auto_ptr.h>
 using namespace std;
 
 #include <MBHandlerInt.h>
+#include <MBDatabase.h>
 
 namespace MB_Framework {
 
@@ -45,6 +47,10 @@ public:
 	 * local list of used handler addressed by MB register
 	 */
 	map<uint16_t,MBHandlerInt*> m_handlerlist;
+
+protected:
+	auto_ptr<MB_Database> db;
+
 private:
 	/**
 	 * Address of associated RTU slave
