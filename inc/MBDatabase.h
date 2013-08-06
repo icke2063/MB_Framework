@@ -1,8 +1,8 @@
 /**
  * @file   MBDatabase.h
- * @Author icke
+ * @Author icke2063
  * @date   29.07.2013
- * @brief  Brief description of file.
+ * @brief  Framework for simple database.
  *
  * Detailed description of file.
  */
@@ -22,8 +22,8 @@ namespace MB_Framework {
 
 class MB_DB_Storage {
 public:
-	MB_DB_Storage();
-	virtual ~MB_DB_Storage();
+	MB_DB_Storage(){};
+	virtual ~MB_DB_Storage(){};
 };
 
 class MB_Database {
@@ -32,14 +32,13 @@ public:
 		initDB();
 
 	}
-	virtual ~MB_Database();
+	virtual ~MB_Database(){};
 
 	/**
 	 * initialize DB
 	 * - add reference to storage object
 	 * - add reference to lock object
 	 */
-	virtual void initDB( void ) = 0;
 
 	MB_DB_Storage *getStorage(void){return _db_storage.get();}
 	MBMutex* getLock(void){return _db_lock.get();}
@@ -47,14 +46,17 @@ public:
 	/**
 	 * lock database until unlock function is called or block until current lock is cleared
 	 */
-	virtual void lockDB(){}
+	virtual void lockDB() = 0;
 
 	/**
 	 * unlock database access
 	 */
-	virtual void unlockDB(){}
+	virtual void unlockDB() = 0;
 
 protected:
+
+	virtual void initDB( void ){}
+
 	/**
 	 * auto ptr to Mutex Object
 	 */

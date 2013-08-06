@@ -43,7 +43,7 @@ public:
 	 * @param pool: pointer to ThreadPool (for connection functors)
 	 * @param port: modbus TCP listen port
 	 */
-	MBServer(uint16_t port,MBThreadPool *pool):p_pool(pool),m_port(port){}
+	MBServer(uint16_t port,MBThreadPool *pool = NULL):p_pool(pool),m_port(port){}
 	virtual ~MBServer(){};
 
 protected:

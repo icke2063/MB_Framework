@@ -46,10 +46,13 @@ public:
 	/**
 	 * local list of used handler addressed by MB register
 	 */
-	map<uint16_t,MBHandlerInt*> m_handlerlist;
+	map<uint16_t,MBHandlerInt*> *getInputHList(void){return &m_input_handlerlist;}
+	map<uint16_t,MBHandlerInt*> *getHoldingHList(void){return &m_holding_handlerlist;}
 
 protected:
 	auto_ptr<MB_Database> db;
+	map<uint16_t,MBHandlerInt*> m_input_handlerlist;
+	map<uint16_t,MBHandlerInt*> m_holding_handlerlist;
 
 private:
 	/**
