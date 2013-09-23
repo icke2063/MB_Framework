@@ -44,11 +44,25 @@ public:
 	virtual uint8_t getType( void ){return 0xFF;}
 
 	/**
-	 * local list of used handler addressed by MB register
+	 * In these lists are the handler objects stored which are called on each
+	 * Modbus request. The handler are indexed by their register address. So the same
+	 * handler object could be used for more than one register.
 	 */
-	map<uint16_t,MBHandlerInt*> m_handlerlist;
+
+	map<uint16_t,MBHandlerInt*> m_discrete_input_handlerlist;
+	map<uint16_t,MBHandlerInt*> m_coil_handlerlist;
+
+	map<uint16_t,MBHandlerInt*> m_input_handlerlist;
+	map<uint16_t,MBHandlerInt*> m_holding_handlerlist;
+
 
 protected:
+	/*
+	 * Associated database object.
+	 * This should be used if there is some data which has to be stored between
+	 * the modbus/TCP requests. If the response is created on the fliy there is not
+	 * used.
+	 */
 	auto_ptr<MB_Database> db;
 
 private:

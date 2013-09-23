@@ -2,10 +2,11 @@
  * @file   MBServer.h
  * @Author icke2063
  * @date   25.05.2013
- * @brief  Modbus Server class which has to be used as MBFunctor with MBTreadpool.
- * 		   Modbus Gateway app shall create a specialized object of this class on each
- * 		   listen port of a server application. The implementation of the functor_function
- * 		   shall be usedfor the modbus tcp accept handling.
+ * @brief 	Modbus Server class which shall be used to create new MBConnections
+ * 			and handle the already created ones. A big select or an own handlerclass
+ * 			could be used (or whatever else ;-) )
+ * 		  	Modbus Gateway app shall create a specialized object of this class on each
+ * 		  	listen port of a server application.
  *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
@@ -31,31 +32,37 @@
 #include <stdint.h>
 #include <list>
 
-#include <MBThreadPool.h>
 #include <stddef.h>
+
+#include "MBMutex.h"
+#include "MBConnection.h"
 
 namespace MB_Framework {
 
-class MBServer : public MBFunctor{
+class MBServer{
 public:
 	/**
 	 *
-	 * @param pool: pointer to ThreadPool (for connection functors)
-	 * @param port: modbus TCP listen port
+	 * @param port: modbus TCP listen port(default: 502)
 	 */
-	MBServer(uint16_t port,MBThreadPool *pool):p_pool(pool),m_port(port){}
-	virtual ~MBServer(){};
+	MBServer(uint16_t port = 502):m_port(port){}
+	virtual ~MBServer(){}
 
 protected:
-	/**
-	 * pointer to associated ThreadPool
-	 */
-	MBThreadPool *p_pool;
-
 	/**
 	 * port of modbus server
 	 */
 	uint16_t m_port;
+
+	/**
+	 * List of all open connections
+	 */
+	list<MBConnection*> openConnections;
+
+	/**
+	 * lock for open connection list
+	 */
+	auto_ptr<MBMutex> m_conn_lock;
 };
 
 } /* namespace MB_Framework */

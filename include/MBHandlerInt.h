@@ -5,6 +5,8 @@
  * @brief  Handler Interface for modbus tcp requests. *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
+ * Interface class for all Handler objects.
+ *
  * This framework is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -26,16 +28,28 @@
 
 namespace MB_Framework {
 
+/**
+ *
+ * @class Parameter object
+ *
+ * With this class it is possible to implement
+ * individual parameter object with the same base type.
+ * So it is referenceable within this framework.
+ */
 class MBHandlerParam {
 public:
-	MBHandlerParam() {
-	}
-	;
-	virtual ~MBHandlerParam() {
-	}
-	;
+	MBHandlerParam() {}
+	virtual ~MBHandlerParam() {}
 };
 
+
+/**
+ * @class Handler Interface class
+ *
+ * Each access to a modbus register has to be handled by
+ * a specific handler function. This class is the base interface
+ * for all inherit handler objects.
+ */
 class MBHandlerInt {
 public:
 	MBHandlerInt() :
@@ -49,13 +63,18 @@ public:
 
 
 	/**
-	 * This function shall be called at each associated modbus request
+	 * This function shall be called at each associated modbus request which
+	 * is associated to a read register function code.
+	 *
 	 * Read access has to collect all requested register data
 	 * @return handled register count or 0 for error -> force modbus exception
 	 */
 	virtual int handleReadAccess(MBHandlerParam *param) = 0;
 
 	/**
+	 * This function shall be called at each associated modbus request which
+	 * is associated to a write register function code.
+	 *
 	 * On Modbus function codes to write data it is important to check
 	 * all requested register on whether it is allowed to write them.
 	 * If one register is not allowed to write the whole request must be
@@ -69,6 +88,9 @@ public:
 	virtual int checkWriteAccess(MBHandlerParam *param) = 0;
 
 	/**
+	 * This function shall be called at each associated modbus request which
+	 * is associated to a write register function code.
+	 *
 	 * Handle Modbus/TCP write requests
 	 * @param param parameter object (handler specific)
 	 * @return count of handled register
@@ -126,7 +148,7 @@ protected:
 	 */
 	bool enableWriteHolReg;
 	/**
-	 * flage to enable write single holding register function code
+	 * flag to enable write single holding register function code
 	 * @def true
 	 */
 	bool enableWriteSHolReg;

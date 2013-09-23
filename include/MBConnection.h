@@ -1,8 +1,12 @@
 /**
- * @file   MBHandlerList.h
- * @Author icke
- * @date   07.06.2013
- * @brief  List of all common handler objects. So all slaves can reuse them.
+ * @file   MBConnection.h
+ * @Author icke2063
+ * @date   26.05.2013
+ * @brief  Modbus Connection class which shall to be used with high performance communication
+ * 		   implementation.
+ * 		   The Modbus Server shall create a specialized object of this class
+ * 		   on each new accepted client connection.
+ *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
  * This framework is free software; you can redistribute it and/or
@@ -18,36 +22,32 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ *
  */
 
-#ifndef MBHANDLERLIST_H_
-#define MBHANDLERLIST_H_
-
-#include "stddef.h"
-#include "stdint.h"
-#include "list"
-using namespace std;
-
-#include <MBHandlerInt.h>
-#include <MBMutex.h>
+#ifndef MBCONNECTION_H_
+#define MBCONNECTION_H_
 
 namespace MB_Framework {
 
-class MBHandlerList {
+class MBConnection{
 public:
-	MBHandlerList():p_handlerlist_lock(NULL){}
-	virtual ~MBHandlerList(){}
+	enum conn_status{
+		init = 0x00,
+		open,
+		busy,
+		closed
+	};
 
-	/**
-	 * list of known handler objects
-	 */
-	list<MBHandlerInt*>			m_handlerlist;
-	/**
-	 * lock for handler list
-	 */
-	MBMutex* 					p_handlerlist_lock;		// lock for slavelist
+public:
+	MBConnection():m_status(init){};
+	virtual ~MBConnection(){};
 
+	enum conn_status getStatus( void ){return m_status;}
+	void setStatus(enum conn_status status){m_status = status;}
+
+protected:
+	enum conn_status m_status;
 };
-
 } /* namespace MB_Framework */
-#endif /* MBHANDLERLIST_H_ */
+#endif /* MBCONNECTION_H_ */

@@ -1,11 +1,12 @@
 /**
- * @file   MBConnection.h
- * @Author icke2063
- * @date   26.05.2013
- * @brief  Modbus Connection class which has to be used as MBFunctor with MBTreadpool.
- * 		   Modbus Server shall create a specialized object of this class on each new accept
- * 		   of a client connection. The implementation of the functor_function shall be used
- * 		   for the modbus tcp request handling.
+ * @file   MBHandlerList.h
+ * @Author icke
+ * @date   07.06.2013
+ * @brief 	List of all common handler objects. So all slaves can reuse them.
+ * 			Therefore the slave can check this list for the listed handler
+ * 			objects and get the pointer value.
+ *
+ * 			@todo use boost shared pointer
  *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
@@ -22,20 +23,36 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- *
  */
 
-#ifndef MBCONNECTION_H_
-#define MBCONNECTION_H_
+#ifndef MBHANDLERLIST_H_
+#define MBHANDLERLIST_H_
 
-#include <MBThreadPool.h>
+#include "stddef.h"
+#include "stdint.h"
+#include "list"
+#include <auto_ptr.h>
+using namespace std;
+
+#include <MBHandlerInt.h>
+#include <MBMutex.h>
 
 namespace MB_Framework {
 
-class MBConnection :public MB_Framework::MBFunctor{
+class MBHandlerList {
 public:
-	MBConnection(){};
-	virtual ~MBConnection(){};
+	MBHandlerList(){}
+	virtual ~MBHandlerList(){}
+
+	/**
+	 * list of known handler objects
+	 */
+	list<MBHandlerInt*>			m_handlerlist;
+	/**
+	 * lock for handler list
+	 */
+	auto_ptr<MBMutex> 			m_handlerlist_lock;		// lock for slavelist
 };
+
 } /* namespace MB_Framework */
-#endif /* MBCONNECTION_H_ */
+#endif /* MBHANDLERLIST_H_ */

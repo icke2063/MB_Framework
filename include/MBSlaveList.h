@@ -4,7 +4,7 @@
  * @date   02.06.2013
  * @brief  Simple interface class for the "MBVirtualRTUSlave"-list of this framework.
  * 		   In the implementation here all associated virtual slaves shall be stored in
- * 		   this global list.
+ * 		   this global list -> e.g. use Singleton
  *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
@@ -29,6 +29,7 @@
 #include "stddef.h"
 #include "stdint.h"
 #include "map"
+#include <auto_ptr.h>
 using namespace std;
 
 #include <MBVirtualRTUSlave.h>
@@ -38,15 +39,39 @@ namespace MB_Framework {
 
 class MBSlaveList {
 public:
-	MBSlaveList():p_slavelist_lock(NULL){};
+	MBSlaveList(){};
 	virtual ~MBSlaveList(){};
 
-	virtual void addSlave(uint8_t index, MBVirtualRTUSlave *newSlave) = 0;
+	/**
+	 * Add new slave object to internal list
+	 * @param newSlave:	pointer to slave object
+	 */
+	virtual bool addSlave( MBVirtualRTUSlave *newSlave) = 0;
+
+	/**
+	 * Remove slave object from internal list
+	 * @param index:	index of slave to remove
+	 * @return	pointer of removed object
+	 */
 	virtual MBVirtualRTUSlave *removeSlave(uint8_t index) = 0;
+
+	/**
+	 * Remove and delete slave object
+	 * @param index:	index of slave to delete
+	 */
 	virtual void deleteSlave(uint8_t index) = 0;
 
+	/**
+	 * Get pointer to slave object from internal list
+	 * @param index:	index of requested slave
+	 * @return			pointer to slave object
+	 */
 	virtual MBVirtualRTUSlave *getSlave(uint8_t index) = 0;
 
+	/**
+	 * Get pointer to whole slavelist
+	 * @return
+	 */
 	virtual map<uint8_t,MBVirtualRTUSlave*> *getList( void ){return &m_slavelist;}
 
 protected:
@@ -57,7 +82,7 @@ protected:
 	/**
 	 * lock for slavelist
 	 */
-	MBMutex* 						p_slavelist_lock;
+	auto_ptr<MBMutex> 						m_slavelist_lock;
 };
 
 } /* namespace MB_Framework */
