@@ -28,6 +28,7 @@
 #ifndef MBCONNECTION_H_
 #define MBCONNECTION_H_
 
+namespace icke2063 {
 namespace MB_Framework {
 
 class MBConnection{
@@ -43,11 +44,26 @@ public:
 	MBConnection():m_status(init){};
 	virtual ~MBConnection(){};
 
+	/**
+	 * get current connection status
+	 * @return
+	 */
 	enum conn_status getStatus( void ){return m_status;}
+
+	/**
+	 * Set connection status
+	 * The connection status shows the connection handler what's going on within here.
+	 * @return
+	 */
 	void setStatus(enum conn_status status){m_status = status;}
 
 protected:
+	/**
+	 * Connection status member variable
+	 */
 	enum conn_status m_status;
 };
+
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBCONNECTION_H_ */

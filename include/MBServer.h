@@ -37,6 +37,7 @@
 #include "MBMutex.h"
 #include "MBConnection.h"
 
+namespace icke2063 {
 namespace MB_Framework {
 
 class MBServer{
@@ -66,4 +67,5 @@ protected:
 };
 
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBSERVER_H_ */

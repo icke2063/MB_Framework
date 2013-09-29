@@ -37,6 +37,7 @@ using namespace std;
 #include <MBHandlerInt.h>
 #include <MBMutex.h>
 
+namespace icke2063 {
 namespace MB_Framework {
 
 class MBHandlerList {
@@ -55,4 +56,5 @@ public:
 };
 
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBHANDLERLIST_H_ */

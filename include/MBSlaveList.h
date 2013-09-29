@@ -35,6 +35,7 @@ using namespace std;
 #include <MBVirtualRTUSlave.h>
 #include <MBMutex.h>
 
+namespace icke2063 {
 namespace MB_Framework {
 
 class MBSlaveList {
@@ -86,4 +87,5 @@ protected:
 };
 
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBSLAVELIST_H_ */

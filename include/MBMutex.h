@@ -22,6 +22,7 @@
 #ifndef MBMUTEX_H_
 #define MBMUTEX_H_
 
+namespace icke2063 {
 namespace MB_Framework {
 
 class MBMutex {
@@ -31,4 +32,5 @@ public:
 };
 
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBMUTEX_H_ */

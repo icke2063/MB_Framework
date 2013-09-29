@@ -26,6 +26,7 @@
 #define MBHANDLERINT_H_
 #include <stdint.h>
 
+namespace icke2063 {
 namespace MB_Framework {
 
 /**
@@ -165,4 +166,5 @@ private:
 };
 
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBHANDLERINT_H_ */

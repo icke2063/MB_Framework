@@ -28,13 +28,13 @@
 #define MBDATABASE_H_
 
 #include <stddef.h>
-
 #include <auto_ptr.h>
 using namespace std;
 
 //MB_Framework
 #include "MBMutex.h"
 
+namespace icke2063 {
 namespace MB_Framework {
 
 class MB_DB_Storage {
@@ -84,4 +84,5 @@ protected:
 };
 
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBDATABASE_H_ */

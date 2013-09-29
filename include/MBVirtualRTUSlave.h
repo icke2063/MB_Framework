@@ -34,6 +34,7 @@ using namespace std;
 #include <MBHandlerInt.h>
 #include <MBDatabase.h>
 
+namespace icke2063 {
 namespace MB_Framework {
 
 class MBVirtualRTUSlave {
@@ -73,4 +74,5 @@ private:
 };
 
 } /* namespace MB_Framework */
+} /* namespace icke2063 */
 #endif /* MBVIRTUALRTUSLAVE_H_ */
