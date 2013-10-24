@@ -5,7 +5,10 @@
  * @brief  Handler Interface for modbus tcp requests. *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
- * Interface class for all Handler objects.
+ * Interface class for all Handler objects. Handler objects are used to
+ * handle the data transfer of each addressable Modbus/TCP register in
+ * each Slave DB. Each VirtualRTUSlave object must hold a mapping list
+ * to connect these handler objects with the Modbus/TCP register.
  *
  * This framework is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

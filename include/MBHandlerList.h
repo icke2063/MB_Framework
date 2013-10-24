@@ -6,7 +6,6 @@
  * 			Therefore the slave can check this list for the listed handler
  * 			objects and get the pointer value.
  *
- * 			@todo use boost shared pointer
  *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *

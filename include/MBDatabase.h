@@ -2,8 +2,8 @@
  * @file   MBDatabase.h
  * @Author icke
  * @date   29.07.2013
- * @brief 	This class is used to representate the Modbus typical
- * 			Database. Therefore here is a MB_DB_Storage itself and
+ * @brief 	This class is used to representate the ModbusTCP typical
+ * 			database. Therefore here is a MB_DB_Storage class itself and
  * 			a pointer to a lock mechanism (to make the application
  * 			thread save)
  *
@@ -37,6 +37,10 @@ using namespace std;
 namespace icke2063 {
 namespace MB_Framework {
 
+/**
+ * Storage object for Database. Here should be the storage implementation
+ * located.
+ */
 class MB_DB_Storage {
 public:
 	MB_DB_Storage();
@@ -73,11 +77,12 @@ protected:
 
 	/**
 	 * auto ptr to MBMutex Object (depends on implementation)
+	 *
 	 */
 	auto_ptr<MBMutex> _db_lock;
 
 	/**
-	 * auto pointer to storage class (depends on implementation)
+	 * auto pointer to storage object (depends on implementation)
 	 */
 	auto_ptr<MB_DB_Storage> _db_storage;
 

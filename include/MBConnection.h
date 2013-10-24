@@ -3,9 +3,11 @@
  * @Author icke2063
  * @date   26.05.2013
  * @brief  Modbus Connection class which shall to be used with high performance communication
- * 		   implementation.
+ * 		   implementation ;-).
  * 		   The Modbus Server shall create a specialized object of this class
  * 		   on each new accepted client connection.
+ * 		   Every incoming Modbus/TCP packet has to be handled by this class. How
+ * 		   this handling works depends on the implementation.
  *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
