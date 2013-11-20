@@ -29,7 +29,7 @@
 #include "stddef.h"
 #include "stdint.h"
 #include "map"
-#include <auto_ptr.h>
+#include <memory>
 using namespace std;
 
 #include <MBVirtualRTUSlave.h>
@@ -83,7 +83,7 @@ protected:
 	/**
 	 * lock for slavelist
 	 */
-	auto_ptr<MBMutex> 						m_slavelist_lock;
+	unique_ptr<MBMutex> 						m_slavelist_lock;
 };
 
 } /* namespace MB_Framework */

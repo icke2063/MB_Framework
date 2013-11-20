@@ -28,7 +28,7 @@
 
 #include "stdint.h"
 #include <map>
-#include <auto_ptr.h>
+#include <memory>
 using namespace std;
 
 #include <MBHandlerInt.h>
@@ -50,11 +50,11 @@ public:
 	 * handler object could be used for more than one register.
 	 */
 
-	map<uint16_t,MBHandlerInt*> m_discrete_input_handlerlist;
-	map<uint16_t,MBHandlerInt*> m_coil_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt>> m_discrete_input_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt>> m_coil_handlerlist;
 
-	map<uint16_t,MBHandlerInt*> m_input_handlerlist;
-	map<uint16_t,MBHandlerInt*> m_holding_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt>> m_input_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt>> m_holding_handlerlist;
 
 
 protected:
@@ -64,7 +64,7 @@ protected:
 	 * the modbus/TCP requests. If the response is created on the fliy there is not
 	 * used.
 	 */
-	auto_ptr<MB_Database> db;
+	unique_ptr<MB_Database> db;
 
 private:
 	/**

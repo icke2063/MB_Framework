@@ -30,7 +30,7 @@
 #include "stddef.h"
 #include "stdint.h"
 #include "list"
-#include <auto_ptr.h>
+#include <memory>
 using namespace std;
 
 #include <MBHandlerInt.h>
@@ -47,11 +47,11 @@ public:
 	/**
 	 * list of known handler objects
 	 */
-	list<MBHandlerInt*>			m_handlerlist;
+	list<shared_ptr<MBHandlerInt>>			m_handlerlist;
 	/**
 	 * lock for handler list
 	 */
-	auto_ptr<MBMutex> 			m_handlerlist_lock;		// lock for slavelist
+	unique_ptr<MBMutex> 			m_handlerlist_lock;		// lock for slavelist
 };
 
 } /* namespace MB_Framework */

@@ -31,6 +31,8 @@
 //std libs
 #include <stdint.h>
 #include <list>
+#include <memory>
+using namespace std;
 
 #include <stddef.h>
 
@@ -58,12 +60,12 @@ protected:
 	/**
 	 * List of all open connections
 	 */
-	list<MBConnection*> openConnections;
+	list<shared_ptr<MBConnection>> openConnections;
 
 	/**
 	 * lock for open connection list
 	 */
-	auto_ptr<MBMutex> m_conn_lock;
+	unique_ptr<MBMutex> m_conn_lock;
 };
 
 } /* namespace MB_Framework */

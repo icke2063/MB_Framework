@@ -30,6 +30,9 @@
 #ifndef MBCONNECTION_H_
 #define MBCONNECTION_H_
 
+#include <memory>
+using namespace std;
+
 namespace icke2063 {
 namespace MB_Framework {
 
@@ -43,27 +46,29 @@ public:
 	};
 
 public:
-	MBConnection():m_status(init){};
+	MBConnection(){
+		m_status = shared_ptr<enum conn_status>(new enum conn_status(MBConnection::open));
+	};
 	virtual ~MBConnection(){};
 
 	/**
 	 * get current connection status
 	 * @return
 	 */
-	enum conn_status getStatus( void ){return m_status;}
+	enum conn_status getStatus( void ){return *m_status.get();}
 
 	/**
 	 * Set connection status
 	 * The connection status shows the connection handler what's going on within here.
 	 * @return
 	 */
-	void setStatus(enum conn_status status){m_status = status;}
+	void setStatus(enum conn_status status){*m_status.get() = status;}
 
 protected:
 	/**
 	 * Connection status member variable
 	 */
-	enum conn_status m_status;
+	shared_ptr<enum conn_status> m_status;
 };
 
 } /* namespace MB_Framework */

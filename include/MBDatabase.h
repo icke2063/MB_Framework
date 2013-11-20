@@ -28,7 +28,7 @@
 #define MBDATABASE_H_
 
 #include <stddef.h>
-#include <auto_ptr.h>
+#include <memory>
 using namespace std;
 
 //MB_Framework
@@ -79,12 +79,12 @@ protected:
 	 * auto ptr to MBMutex Object (depends on implementation)
 	 *
 	 */
-	auto_ptr<MBMutex> _db_lock;
+	unique_ptr<MBMutex> _db_lock;
 
 	/**
 	 * auto pointer to storage object (depends on implementation)
 	 */
-	auto_ptr<MB_DB_Storage> _db_storage;
+	unique_ptr<MB_DB_Storage> _db_storage;
 
 };
 
