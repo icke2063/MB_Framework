@@ -50,11 +50,11 @@ public:
 	 * handler object could be used for more than one register.
 	 */
 
-	map<uint16_t,shared_ptr<MBHandlerInt>> m_discrete_input_handlerlist;
-	map<uint16_t,shared_ptr<MBHandlerInt>> m_coil_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt> > m_discrete_input_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt> > m_coil_handlerlist;
 
-	map<uint16_t,shared_ptr<MBHandlerInt>> m_input_handlerlist;
-	map<uint16_t,shared_ptr<MBHandlerInt>> m_holding_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt> > m_input_handlerlist;
+	map<uint16_t,shared_ptr<MBHandlerInt> > m_holding_handlerlist;
 
 
 protected:

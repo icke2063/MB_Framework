@@ -30,8 +30,17 @@
 #ifndef MBCONNECTION_H_
 #define MBCONNECTION_H_
 
-#include <memory>
-using namespace std;
+//std lib
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
+  #include <memory>
+  #include <thread>
+  #include <condition_variable>
+  #include <mutex>
+  using namespace std;
+#else
+  #include <boost/shared_ptr.hpp>
+  using namespace boost;
+#endif
 
 namespace icke2063 {
 namespace MB_Framework {

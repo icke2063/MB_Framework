@@ -31,12 +31,21 @@
 //std libs
 #include <stdint.h>
 #include <list>
-#include <memory>
-using namespace std;
+
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
+  #include <memory>
+  #include <thread>
+  using namespace std;
+#else
+  #include <boost/shared_ptr.hpp>
+  #include <boost/thread.hpp>
+  using namespace boost;
+  
+  #define unique_ptr shared_ptr
+#endif
 
 #include <stddef.h>
 
-#include "MBMutex.h"
 #include "MBConnection.h"
 
 namespace icke2063 {
@@ -60,12 +69,12 @@ protected:
 	/**
 	 * List of all open connections
 	 */
-	list<shared_ptr<MBConnection>> openConnections;
+	std::list<shared_ptr<MBConnection> > openConnections;
 
 	/**
 	 * lock for open connection list
 	 */
-	unique_ptr<MBMutex> m_conn_lock;
+	unique_ptr<mutex> m_conn_lock;
 };
 
 } /* namespace MB_Framework */

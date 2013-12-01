@@ -30,8 +30,15 @@
 #include "stddef.h"
 #include "stdint.h"
 #include "list"
-#include <memory>
-using namespace std;
+
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
+  #include <memory>
+  #include <mutex>
+  using namespace std;
+#else
+  #include <boost/thread.hpp>
+  using namespace boost;
+#endif
 
 #include <MBHandlerInt.h>
 #include <MBMutex.h>
@@ -47,11 +54,11 @@ public:
 	/**
 	 * list of known handler objects
 	 */
-	list<shared_ptr<MBHandlerInt>>			m_handlerlist;
+	list<shared_ptr<MBHandlerInt> >			m_handlerlist;
 	/**
 	 * lock for handler list
 	 */
-	unique_ptr<MBMutex> 			m_handlerlist_lock;		// lock for slavelist
+	unique_ptr<mutex> 			m_handlerlist_lock;		// lock for slavelist
 };
 
 } /* namespace MB_Framework */

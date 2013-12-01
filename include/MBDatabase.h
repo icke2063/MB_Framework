@@ -28,6 +28,16 @@
 #define MBDATABASE_H_
 
 #include <stddef.h>
+
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
+  #include <memory>
+  using namespace std;
+#else
+  #include <boost/shared_ptr.hpp>
+  using namespace boost;
+  #define unique_ptr shared_ptr
+#endif
+
 #include <memory>
 using namespace std;
 
