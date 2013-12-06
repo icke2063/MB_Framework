@@ -39,23 +39,21 @@
   using namespace boost;
 #endif
 
-
 #include <MBVirtualRTUSlave.h>
-#include <MBMutex.h>
 
 namespace icke2063 {
 namespace MB_Framework {
 
 class MBSlaveList {
 public:
-	MBSlaveList(){};
+	MBSlaveList(){}
 	virtual ~MBSlaveList(){};
 
 	/**
 	 * Add new slave object to internal list
 	 * @param newSlave:	pointer to slave object
 	 */
-	virtual bool addSlave(uint8_t index, shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
+	virtual bool addSlave(shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
 
 	/**
 	 * Remove slave object from internal list
