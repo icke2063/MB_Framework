@@ -44,6 +44,8 @@ public:
 	uint8_t getSlaveAddr(void){return _SlaveAddr;}
 	virtual uint8_t getType( void ){return 0xFF;}
 
+	shared_ptr<MB_Database> getDB(){return db;}
+
 	/**
 	 * In these lists are the handler objects stored which are called on each
 	 * Modbus request. The handler are indexed by their register address. So the same
@@ -64,7 +66,7 @@ protected:
 	 * the modbus/TCP requests. If the response is created on the fliy there is not
 	 * used.
 	 */
-	unique_ptr<MB_Database> db;
+	shared_ptr<MB_Database> db;
 
 private:
 	/**

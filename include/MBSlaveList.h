@@ -55,7 +55,7 @@ public:
 	 * Add new slave object to internal list
 	 * @param newSlave:	pointer to slave object
 	 */
-	virtual bool addSlave( shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
+	virtual bool addSlave(uint8_t index, shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
 
 	/**
 	 * Remove slave object from internal list
