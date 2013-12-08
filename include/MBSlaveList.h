@@ -63,6 +63,14 @@ public:
 	virtual shared_ptr<MBVirtualRTUSlave> removeSlave(uint8_t index) = 0;
 
 	/**
+	 * Remove all slave object from internal list
+	 */
+	void removeAllSlaves(){
+		lock_guard<mutex> lock(*m_slavelist_lock.get()); //lock isMBSlaveList
+		m_slavelist.clear();
+	}
+
+	/**
 	 * Get pointer to slave object from internal list
 	 * @param index:	index of requested slave
 	 * @return			pointer to slave object
