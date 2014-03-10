@@ -32,6 +32,7 @@
 #if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
   #include <thread>
   #include <memory>
+  #include <mutex>
   using namespace std;
 #else
   #include <boost/shared_ptr.hpp>
