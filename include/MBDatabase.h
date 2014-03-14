@@ -39,7 +39,7 @@
   #include <boost/thread.hpp>
   using namespace boost;
 	#ifndef unique_ptr
-	  #define unique_ptr shared_ptr
+	  #define unique_ptr scoped_ptr
 	#endif
 #endif
 
