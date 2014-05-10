@@ -35,7 +35,8 @@
   #include <mutex>
   using namespace std;
 #else
-  #include <boost/thread.hpp>
+  #include <boost/shared_ptr.hpp>
+  #include <boost/thread/mutex.hpp>
   using namespace boost;
 #endif
 

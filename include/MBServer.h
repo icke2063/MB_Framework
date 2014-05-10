@@ -34,15 +34,13 @@
 
 #if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
   #include <memory>
-  #include <thread>
+  #include <mutex>
   using namespace std;
 #else
   #include <boost/shared_ptr.hpp>
-  #include <boost/thread.hpp>
+  #include <boost/scoped_ptr.hpp>
+  #include <boost/thread/mutex.hpp>
   using namespace boost;
-	#ifndef unique_ptr
-	  #define unique_ptr scoped_ptr
-	#endif
 #endif
 
 #include <stddef.h>
@@ -75,7 +73,14 @@ protected:
 	/**
 	 * lock for open connection list
 	 */
+
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
 	unique_ptr<mutex> m_conn_lock;
+#else
+	scoped_ptr<mutex> m_conn_lock;
+#endif
+
+
 };
 
 } /* namespace MB_Framework */

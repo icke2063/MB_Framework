@@ -28,8 +28,14 @@
 
 #include "stdint.h"
 #include <map>
-#include <memory>
-using namespace std;
+
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
+  #include <memory>
+  using namespace std;
+#else
+  #include <boost/shared_ptr.hpp>
+  using namespace boost;
+#endif
 
 #include <MBHandlerInt.h>
 #include <MBDatabase.h>

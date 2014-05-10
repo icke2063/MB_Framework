@@ -36,7 +36,8 @@
   #include <mutex>
   using namespace std;
 #else
-  #include <boost/thread.hpp>
+  #include <boost/shared_ptr.hpp>
+  #include <boost/scoped_ptr.hpp>
   using namespace boost;
 #endif
 
@@ -57,7 +58,12 @@ public:
 	/**
 	 * lock for handler list
 	 */
+#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
 	unique_ptr<mutex> 			m_handlerlist_lock;		// lock for slavelist
+#else
+	scoped_ptr<mutex> 			m_handlerlist_lock;		// lock for slavelist
+#endif
+
 };
 
 } /* namespace MB_Framework */

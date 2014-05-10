@@ -57,11 +57,12 @@ public:
 class MBHandlerInt {
 public:
 	MBHandlerInt() :
-			rstart(1), rstop(1),
-			enableReadInpReg(true),
-			enableReadHolReg(true),
-			enableWriteHolReg(true),
-			enableWriteSHolReg(true){
+		enableReadInpReg(true),
+		enableReadHolReg(true),
+		enableWriteHolReg(true),
+		enableWriteSHolReg(true),
+		rstart(1), rstop(1){
+
 	}
 	virtual ~MBHandlerInt() {};
 

@@ -33,9 +33,6 @@
 //std lib
 #if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
   #include <memory>
-  #include <thread>
-  #include <condition_variable>
-  #include <mutex>
   using namespace std;
 #else
   #include <boost/shared_ptr.hpp>
