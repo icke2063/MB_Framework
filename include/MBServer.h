@@ -32,15 +32,15 @@
 #include <stdint.h>
 #include <list>
 
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-  #include <memory>
-  #include <mutex>
-  using namespace std;
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	#include <memory>
+	#include <mutex>
+	#define MBSERVER_H_NS std
 #else
-  #include <boost/shared_ptr.hpp>
-  #include <boost/scoped_ptr.hpp>
-  #include <boost/thread/mutex.hpp>
-  using namespace boost;
+	#include <boost/shared_ptr.hpp>
+	#include <boost/scoped_ptr.hpp>
+	#include <boost/thread/mutex.hpp>
+	#define MBSERVER_H_NS boost
 #endif
 
 #include <stddef.h>
@@ -68,19 +68,17 @@ protected:
 	/**
 	 * List of all open connections
 	 */
-	std::list<shared_ptr<MBConnection> > openConnections;
+	std::list<MBSERVER_H_NS::shared_ptr<MBConnection> > openConnections;
 
 	/**
 	 * lock for open connection list
 	 */
 
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-	unique_ptr<mutex> m_conn_lock;
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	std::unique_ptr<std::mutex> m_conn_lock;
 #else
-	scoped_ptr<mutex> m_conn_lock;
+	boost::scoped_ptr<boost::mutex> m_conn_lock;
 #endif
-
-
 };
 
 } /* namespace MB_Framework */

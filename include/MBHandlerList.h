@@ -31,14 +31,14 @@
 #include "stdint.h"
 #include "list"
 
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-  #include <memory>
-  #include <mutex>
-  using namespace std;
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	#include <memory>
+	#include <mutex>
+	#define MBHANDLERLIST_H_NS std
 #else
-  #include <boost/shared_ptr.hpp>
-  #include <boost/scoped_ptr.hpp>
-  using namespace boost;
+	#include <boost/shared_ptr.hpp>
+	#include <boost/scoped_ptr.hpp>
+	#define MBHANDLERLIST_H_NS boost
 #endif
 
 #include <MBHandlerInt.h>
@@ -54,16 +54,15 @@ public:
 	/**
 	 * list of known handler objects
 	 */
-	list<shared_ptr<MBHandlerInt> >			m_handlerlist;
+	std::list<MBHANDLERLIST_H_NS::shared_ptr<MBHandlerInt> >			m_handlerlist;
 	/**
 	 * lock for handler list
 	 */
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-	unique_ptr<mutex> 			m_handlerlist_lock;		// lock for slavelist
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	std::unique_ptr<std::mutex> 			m_handlerlist_lock;		// lock for slavelist
 #else
-	scoped_ptr<mutex> 			m_handlerlist_lock;		// lock for slavelist
+	boost::scoped_ptr<boost::mutex> 			m_handlerlist_lock;		// lock for slavelist
 #endif
-
 };
 
 } /* namespace MB_Framework */

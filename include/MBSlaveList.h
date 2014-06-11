@@ -30,14 +30,18 @@
 #include "stdint.h"
 #include "map"
 
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-  #include <memory>
-  #include <mutex>
-  using namespace std;
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	#include <memory>
+	#include <mutex>
+	#include <thread>
+
+	#define MBSLAVELIST_H_NS std
 #else
-  #include <boost/shared_ptr.hpp>
-  #include <boost/thread/mutex.hpp>
-  using namespace boost;
+	#include <boost/shared_ptr.hpp>
+	#include <boost/thread/mutex.hpp>
+	#include <boost/thread/locks.hpp>
+
+	#define MBSLAVELIST_H_NS boost
 #endif
 
 #include <MBVirtualRTUSlave.h>
@@ -54,20 +58,20 @@ public:
 	 * Add new slave object to internal list
 	 * @param newSlave:	pointer to slave object
 	 */
-	virtual bool addSlave(shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
+	virtual bool addSlave(MBSLAVELIST_H_NS::shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
 
 	/**
 	 * Remove slave object from internal list
 	 * @param index:	index of slave to remove
 	 * @return	pointer of removed object
 	 */
-	virtual shared_ptr<MBVirtualRTUSlave> removeSlave(uint8_t index) = 0;
+	virtual MBSLAVELIST_H_NS::shared_ptr<MBVirtualRTUSlave> removeSlave(uint8_t index) = 0;
 
 	/**
 	 * Remove all slave object from internal list
 	 */
 	void removeAllSlaves(){
-		lock_guard<mutex> lock(*m_slavelist_lock.get()); //lock isMBSlaveList
+		MBSLAVELIST_H_NS::lock_guard<MBSLAVELIST_H_NS::mutex> lock(*m_slavelist_lock.get()); //lock isMBSlaveList
 		m_slavelist.clear();
 	}
 
@@ -76,26 +80,26 @@ public:
 	 * @param index:	index of requested slave
 	 * @return			pointer to slave object
 	 */
-	virtual shared_ptr<MBVirtualRTUSlave> getSlave(uint8_t index) = 0;
+	virtual MBSLAVELIST_H_NS::shared_ptr<MBVirtualRTUSlave> getSlave(uint8_t index) = 0;
 
 	/**
 	 * Get pointer to whole slavelist
 	 * @return
 	 */
-	virtual map<uint8_t,shared_ptr<MBVirtualRTUSlave> > *getList( void ){return &m_slavelist;}
+	virtual std::map<uint8_t,MBSLAVELIST_H_NS::shared_ptr<MBVirtualRTUSlave> > *getList( void ){return &m_slavelist;}
 	
 
 protected:
 	/**
 	 * map of virtual slave object pointers addressed by slaveID
 	 */
-	map<uint8_t,shared_ptr<MBVirtualRTUSlave> > m_slavelist;
-	typedef map<uint8_t, shared_ptr<MBVirtualRTUSlave> >::iterator m_slavelist_it;
+	std::map<uint8_t,MBSLAVELIST_H_NS::shared_ptr<MBVirtualRTUSlave> > m_slavelist;
+	typedef std::map<uint8_t, MBSLAVELIST_H_NS::shared_ptr<MBVirtualRTUSlave> >::iterator m_slavelist_it;
 	
 	/**
 	 * lock for slavelist
 	 */
-	shared_ptr<mutex> 						m_slavelist_lock;
+	MBSLAVELIST_H_NS::shared_ptr<MBSLAVELIST_H_NS::mutex> 						m_slavelist_lock;
 };
 
 } /* namespace MB_Framework */

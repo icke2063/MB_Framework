@@ -29,15 +29,17 @@
 
 #include <stddef.h>
 
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-  #include <memory>
-  #include <mutex>
-  using namespace std;
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	#include <memory>
+	#include <mutex>
+
+	#define MBDATABASE_H_NS std
 #else
 	#include <boost/shared_ptr.hpp>
 	#include <boost/scoped_ptr.hpp>
 	#include <boost/thread/mutex.hpp>
-  	using namespace boost;
+
+	#define MBDATABASE_H_NS boost
 #endif
 
 namespace icke2063 {
@@ -61,7 +63,7 @@ public:
 	virtual ~MB_Database(){};
 
 	MB_DB_Storage *getStorage(void){return _db_storage.get();}
-	shared_ptr<mutex> getLock(void){return _db_lock;}
+	MBDATABASE_H_NS::shared_ptr<MBDATABASE_H_NS::mutex> getLock(void){return _db_lock;}
 
 	/**
 	 * lock database until unlock function is called or block until current lock is cleared
@@ -85,19 +87,16 @@ protected:
 	 * ptr to MBMutex Object (depends on implementation)
 	 *
 	 */
-	shared_ptr<mutex> _db_lock;
+	MBDATABASE_H_NS::shared_ptr<MBDATABASE_H_NS::mutex> _db_lock;
 
 	/**
 	 * pointer to storage object (depends on implementation)
 	 */
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-	unique_ptr<MB_DB_Storage> _db_storage;
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	std::unique_ptr<MB_DB_Storage> _db_storage;
 #else
-	scoped_ptr<MB_DB_Storage> _db_storage;
+	boost::scoped_ptr<MB_DB_Storage> _db_storage;
 #endif
-
-
-
 };
 
 } /* namespace MB_Framework */

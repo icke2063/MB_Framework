@@ -29,12 +29,12 @@
 #include "stdint.h"
 #include <map>
 
-#if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
-  #include <memory>
-  using namespace std;
+#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
+	#include <memory>
+	#define MBVIRTUALRTUSLAVE_H_NS std
 #else
-  #include <boost/shared_ptr.hpp>
-  using namespace boost;
+	#include <boost/shared_ptr.hpp>
+	#define MBVIRTUALRTUSLAVE_H_NS boost
 #endif
 
 #include <MBHandlerInt.h>
@@ -50,7 +50,7 @@ public:
 	uint8_t getSlaveAddr(void){return _SlaveAddr;}
 	virtual uint8_t getType( void ){return 0xFF;}
 
-	shared_ptr<MB_Database> getDB(){return db;}
+	MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MB_Database> getDB(){return db;}
 
 	/**
 	 * In these lists are the handler objects stored which are called on each
@@ -58,12 +58,11 @@ public:
 	 * handler object could be used for more than one register.
 	 */
 
-	map<uint16_t,shared_ptr<MBHandlerInt> > m_discrete_input_handlerlist;
-	map<uint16_t,shared_ptr<MBHandlerInt> > m_coil_handlerlist;
+	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_discrete_input_handlerlist;
+	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_coil_handlerlist;
 
-	map<uint16_t,shared_ptr<MBHandlerInt> > m_input_handlerlist;
-	map<uint16_t,shared_ptr<MBHandlerInt> > m_holding_handlerlist;
-
+	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_input_handlerlist;
+	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_holding_handlerlist;
 
 protected:
 	/*
@@ -72,7 +71,7 @@ protected:
 	 * the modbus/TCP requests. If the response is created on the fliy there is not
 	 * used.
 	 */
-	shared_ptr<MB_Database> db;
+	MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MB_Database> db;
 
 private:
 	/**
