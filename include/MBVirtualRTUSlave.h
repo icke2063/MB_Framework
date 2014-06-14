@@ -43,6 +43,8 @@
 namespace icke2063 {
 namespace MB_Framework {
 
+typedef std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > handlerlist_type;
+
 class MBVirtualRTUSlave {
 public:
 	MBVirtualRTUSlave(uint8_t SlaveAddr):_SlaveAddr(SlaveAddr){}
@@ -58,11 +60,12 @@ public:
 	 * handler object could be used for more than one register.
 	 */
 
-	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_discrete_input_handlerlist;
-	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_coil_handlerlist;
 
-	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_input_handlerlist;
-	std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > m_holding_handlerlist;
+	handlerlist_type m_discrete_input_handlerlist;
+	handlerlist_type m_coil_handlerlist;
+
+	handlerlist_type m_input_handlerlist;
+	handlerlist_type m_holding_handlerlist;
 
 protected:
 	/*
