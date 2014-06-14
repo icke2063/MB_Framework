@@ -6,6 +6,8 @@
  * 		   handlerlist shall hold for each used register the pointer to the associated
  * 		   handlerobject
  *
+ * Namespace switching: see README.md
+ *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
  * This framework is free software; you can redistribute it and/or
@@ -29,12 +31,16 @@
 #include "stdint.h"
 #include <map>
 
+#ifdef MBVS_NS
+#error "namespace constant 'MBVS_NS' already defined"
+#endif
+
 #ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
 	#include <memory>
-	#define MBVIRTUALRTUSLAVE_H_NS std
+	#define MBVS_NS std
 #else
 	#include <boost/shared_ptr.hpp>
-	#define MBVIRTUALRTUSLAVE_H_NS boost
+	#define MBVS_NS boost
 #endif
 
 #include <MBHandlerInt.h>
@@ -43,7 +49,7 @@
 namespace icke2063 {
 namespace MB_Framework {
 
-typedef std::map<uint16_t,MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MBHandlerInt> > handlerlist_type;
+typedef std::map<uint16_t,MBVS_NS::shared_ptr<MBHandlerInt> > m_handlerlist_type;
 
 class MBVirtualRTUSlave {
 public:
@@ -52,20 +58,18 @@ public:
 	uint8_t getSlaveAddr(void){return _SlaveAddr;}
 	virtual uint8_t getType( void ){return 0xFF;}
 
-	MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MB_Database> getDB(){return db;}
+	MBVS_NS::shared_ptr<MB_Database> getDB(){return db;}
 
 	/**
 	 * In these lists are the handler objects stored which are called on each
 	 * Modbus request. The handler are indexed by their register address. So the same
 	 * handler object could be used for more than one register.
 	 */
+	m_handlerlist_type m_discrete_input_handlerlist;
+	m_handlerlist_type m_coil_handlerlist;
 
-
-	handlerlist_type m_discrete_input_handlerlist;
-	handlerlist_type m_coil_handlerlist;
-
-	handlerlist_type m_input_handlerlist;
-	handlerlist_type m_holding_handlerlist;
+	m_handlerlist_type m_input_handlerlist;
+	m_handlerlist_type m_holding_handlerlist;
 
 protected:
 	/*
@@ -74,7 +78,7 @@ protected:
 	 * the modbus/TCP requests. If the response is created on the fliy there is not
 	 * used.
 	 */
-	MBVIRTUALRTUSLAVE_H_NS::shared_ptr<MB_Database> db;
+	MBVS_NS::shared_ptr<MB_Database> db;
 
 private:
 	/**

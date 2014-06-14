@@ -30,17 +30,6 @@
 #ifndef MBCONNECTION_H_
 #define MBCONNECTION_H_
 
-//std lib
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	#include <memory>
-
-	#define MBCONNECTION_H_NS std
-#else
-	#include <boost/shared_ptr.hpp>
-
-	#define MBCONNECTION_H_NS boost
-#endif
-
 namespace icke2063 {
 namespace MB_Framework {
 
@@ -55,7 +44,7 @@ public:
 
 public:
 	MBConnection(){
-		m_status = MBCONNECTION_H_NS::shared_ptr<enum conn_status>(new enum conn_status(MBConnection::open));
+		m_status = MBConnection::open;
 	};
 	virtual ~MBConnection(){};
 
@@ -63,20 +52,20 @@ public:
 	 * get current connection status
 	 * @return
 	 */
-	enum conn_status getStatus( void ){return *m_status.get();}
+	enum conn_status getStatus( void ){return m_status;}
 
 	/**
 	 * Set connection status
 	 * The connection status shows the connection handler what's going on within here.
 	 * @return
 	 */
-	void setStatus(enum conn_status status){*m_status.get() = status;}
+	void setStatus(enum conn_status status){m_status = status;}
 
 protected:
 	/**
 	 * Connection status member variable
 	 */
-	MBCONNECTION_H_NS::shared_ptr<enum conn_status> m_status;
+	enum conn_status m_status;
 };
 
 } /* namespace MB_Framework */

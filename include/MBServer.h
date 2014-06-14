@@ -8,6 +8,8 @@
  * 		  	Modbus Gateway app shall create a specialized object of this class on each
  * 		  	listen port of a server application.
  *
+ * Namespace switching: see README.md
+ *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
  * This framework is free software; you can redistribute it and/or
@@ -32,15 +34,21 @@
 #include <stdint.h>
 #include <list>
 
+#ifdef MBSRV_NS
+#error "namespace constant 'MBSRV_NS' already defined"
+#endif
+
 #ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
 	#include <memory>
 	#include <mutex>
-	#define MBSERVER_H_NS std
+	#define MBSRV_NS std
 #else
+	//c++03
+	#include <auto_ptr.h>
+	//boost
 	#include <boost/shared_ptr.hpp>
-	#include <boost/scoped_ptr.hpp>
 	#include <boost/thread/mutex.hpp>
-	#define MBSERVER_H_NS boost
+	#define MBSRV_NS boost
 #endif
 
 #include <stddef.h>
@@ -68,17 +76,13 @@ protected:
 	/**
 	 * List of all open connections
 	 */
-	std::list<MBSERVER_H_NS::shared_ptr<MBConnection> > openConnections;
+	std::list<MBSRV_NS::shared_ptr<MBConnection> > openConnections;
 
 	/**
 	 * lock for open connection list
 	 */
+	std::auto_ptr<MBSRV_NS::mutex> m_conn_lock;
 
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	std::unique_ptr<std::mutex> m_conn_lock;
-#else
-	boost::scoped_ptr<boost::mutex> m_conn_lock;
-#endif
 };
 
 } /* namespace MB_Framework */

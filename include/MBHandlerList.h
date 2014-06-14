@@ -6,6 +6,7 @@
  * 			Therefore the slave can check this list for the listed handler
  * 			objects and get the pointer value.
  *
+ * Namespace switching: see README.md
  *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
@@ -31,14 +32,18 @@
 #include "stdint.h"
 #include "list"
 
+#ifdef MBHL_NS
+#error "namespace constant 'MBHL_NS' already defined"
+#endif
+
 #ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
 	#include <memory>
 	#include <mutex>
-	#define MBHANDLERLIST_H_NS std
+	#define MBHL_NS std
 #else
 	#include <boost/shared_ptr.hpp>
 	#include <boost/scoped_ptr.hpp>
-	#define MBHANDLERLIST_H_NS boost
+	#define MBHL_NS boost
 #endif
 
 #include <MBHandlerInt.h>
@@ -54,15 +59,12 @@ public:
 	/**
 	 * list of known handler objects
 	 */
-	std::list<MBHANDLERLIST_H_NS::shared_ptr<MBHandlerInt> >			m_handlerlist;
+	std::list<MBHL_NS::shared_ptr<MBHandlerInt> >			m_handlerlist;
 	/**
 	 * lock for handler list
 	 */
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	std::unique_ptr<std::mutex> 			m_handlerlist_lock;		// lock for slavelist
-#else
-	boost::scoped_ptr<boost::mutex> 			m_handlerlist_lock;		// lock for slavelist
-#endif
+	MBHL_NS::shared_ptr<MBHL_NS::mutex> 			m_handlerlist_lock;		// lock for slavelist
+
 };
 
 } /* namespace MB_Framework */

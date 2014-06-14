@@ -7,6 +7,8 @@
  * 			a pointer to a lock mechanism (to make the application
  * 			thread save)
  *
+ * Namespace switching: see README.md
+ *
  * Copyright © 2013 icke2063 <icke2063@gmail.com>
  *
  * This framework is free software; you can redistribute it and/or
@@ -29,17 +31,20 @@
 
 #include <stddef.h>
 
+#ifdef MBDB_NS
+#error "namespace constant 'MBDB_NS' already defined"
+#endif
+
 #ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
 	#include <memory>
 	#include <mutex>
 
-	#define MBDATABASE_H_NS std
+	#define MBDB_NS std
 #else
 	#include <boost/shared_ptr.hpp>
-	#include <boost/scoped_ptr.hpp>
 	#include <boost/thread/mutex.hpp>
 
-	#define MBDATABASE_H_NS boost
+	#define MBDB_NS boost
 #endif
 
 namespace icke2063 {
@@ -62,8 +67,8 @@ public:
 	}
 	virtual ~MB_Database(){};
 
-	MB_DB_Storage *getStorage(void){return _db_storage.get();}
-	MBDATABASE_H_NS::shared_ptr<MBDATABASE_H_NS::mutex> getLock(void){return _db_lock;}
+	MBDB_NS::shared_ptr<MB_DB_Storage> getStorage(void){return _db_storage;}
+	MBDB_NS::shared_ptr<MBDB_NS::mutex> getLock(void){return _db_lock;}
 
 	/**
 	 * lock database until unlock function is called or block until current lock is cleared
@@ -84,19 +89,16 @@ protected:
 	virtual void initDB( void ){};
 
 	/**
-	 * ptr to MBMutex Object (depends on implementation)
+	 * ptr to mutex Object (depends on implementation)
 	 *
 	 */
-	MBDATABASE_H_NS::shared_ptr<MBDATABASE_H_NS::mutex> _db_lock;
+	MBDB_NS::shared_ptr<MBDB_NS::mutex> _db_lock;
 
 	/**
 	 * pointer to storage object (depends on implementation)
 	 */
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	std::unique_ptr<MB_DB_Storage> _db_storage;
-#else
-	boost::scoped_ptr<MB_DB_Storage> _db_storage;
-#endif
+	MBDB_NS::shared_ptr<MB_DB_Storage> _db_storage;
+
 };
 
 } /* namespace MB_Framework */
