@@ -28,6 +28,8 @@
 #ifndef MBSLAVELIST_H_
 #define MBSLAVELIST_H_
 
+#include <MB_Framework_config.h>
+
 #include "stddef.h"
 #include "stdint.h"
 #include "map"

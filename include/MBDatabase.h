@@ -28,6 +28,7 @@
 
 #ifndef MBDATABASE_H_
 #define MBDATABASE_H_
+#include <MB_Framework_config.h>
 
 #include <stddef.h>
 

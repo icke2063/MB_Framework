@@ -28,6 +28,8 @@
 #ifndef MBVIRTUALRTUSLAVE_H_
 #define MBVIRTUALRTUSLAVE_H_
 
+#include <MB_Framework_config.h>
+
 #include "stdint.h"
 #include <map>
 

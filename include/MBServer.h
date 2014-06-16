@@ -30,6 +30,8 @@
 #ifndef MBSERVER_H_
 #define MBSERVER_H_
 
+#include <MB_Framework_config.h>
+
 //std libs
 #include <stdint.h>
 #include <list>

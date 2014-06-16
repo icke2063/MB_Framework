@@ -28,6 +28,8 @@
 #ifndef MBHANDLERLIST_H_
 #define MBHANDLERLIST_H_
 
+#include <MB_Framework_config.h>
+
 #include "stddef.h"
 #include "stdint.h"
 #include "list"
