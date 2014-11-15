@@ -38,6 +38,7 @@ public:
 	enum conn_status{
 		init = 0x00,
 		open,
+		wait,
 		busy,
 		closed
 	};
