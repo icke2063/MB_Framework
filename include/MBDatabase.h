@@ -28,25 +28,12 @@
 
 #ifndef MBDATABASE_H_
 #define MBDATABASE_H_
-#include <MB_Framework_config.h>
 
 #include <stddef.h>
 
-#ifdef MBDB_NS
-#error "namespace constant 'MBDB_NS' already defined"
-#endif
-
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	#include <memory>
-	#include <mutex>
-
-	#define MBDB_NS std
-#else
-	#include <boost/shared_ptr.hpp>
-	#include <boost/thread/mutex.hpp>
-
-	#define MBDB_NS boost
-#endif
+/** C++11 */
+#include <memory>
+#include <mutex>
 
 namespace icke2063 {
 namespace MB_Framework {
@@ -68,8 +55,8 @@ public:
 	}
 	virtual ~MB_Database(){};
 
-	MBDB_NS::shared_ptr<MB_DB_Storage> getStorage(void){return _db_storage;}
-	MBDB_NS::shared_ptr<MBDB_NS::mutex> getLock(void){return _db_lock;}
+	std::shared_ptr<MB_DB_Storage> getStorage(void){return _db_storage;}
+	std::shared_ptr<std::mutex> getLock(void){return _db_lock;}
 
 	/**
 	 * lock database until unlock function is called or block until current lock is cleared
@@ -93,12 +80,12 @@ protected:
 	 * ptr to mutex Object (depends on implementation)
 	 *
 	 */
-	MBDB_NS::shared_ptr<MBDB_NS::mutex> _db_lock;
+	std::shared_ptr<std::mutex> _db_lock;
 
 	/**
 	 * pointer to storage object (depends on implementation)
 	 */
-	MBDB_NS::shared_ptr<MB_DB_Storage> _db_storage;
+	std::shared_ptr<MB_DB_Storage> _db_storage;
 
 };
 

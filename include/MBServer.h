@@ -30,28 +30,13 @@
 #ifndef MBSERVER_H_
 #define MBSERVER_H_
 
-#include <MB_Framework_config.h>
-
 //std libs
 #include <stdint.h>
 #include <list>
 
-#ifdef MBSRV_NS
-#error "namespace constant 'MBSRV_NS' already defined"
-#endif
-
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	#include <memory>
-	#include <mutex>
-	#define MBSRV_NS std
-#else
-	//c++03
-	#include <auto_ptr.h>
-	//boost
-	#include <boost/shared_ptr.hpp>
-	#include <boost/thread/mutex.hpp>
-	#define MBSRV_NS boost
-#endif
+/** C++11 */
+#include <memory>
+#include <mutex>
 
 #include <stddef.h>
 
@@ -78,12 +63,12 @@ protected:
 	/**
 	 * List of all open connections
 	 */
-	std::list<MBSRV_NS::shared_ptr<MBConnection> > openConnections;
+	std::list<std::shared_ptr<MBConnection> > openConnections;
 
 	/**
 	 * lock for open connection list
 	 */
-	std::auto_ptr<MBSRV_NS::mutex> m_conn_lock;
+	std::auto_ptr<std::mutex> m_conn_lock;
 
 };
 

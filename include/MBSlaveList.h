@@ -28,31 +28,14 @@
 #ifndef MBSLAVELIST_H_
 #define MBSLAVELIST_H_
 
-#include <MB_Framework_config.h>
-
 #include "stddef.h"
 #include "stdint.h"
 #include "map"
 
-#ifdef MBSL_NS
-#error "namespace constant 'MBSL_NS' already defined"
-#endif
-
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	#include <memory>
-	#include <mutex>
-	#include <thread>
-
-	#define MBSL_NS std
-#else
-	#include <boost/shared_ptr.hpp>
-	#include <boost/thread/mutex.hpp>
-	#include <boost/thread/locks.hpp>
-
-	#define MBSL_NS boost
-#endif
-
-//#include <MBVirtualRTUSlave.h>
+/** C++11 */
+#include <memory>
+#include <mutex>
+#include <thread>
 
 namespace icke2063 {
 namespace MB_Framework {
@@ -61,7 +44,7 @@ class MBVirtualRTUSlave;
 
 class MBSlaveList {
 public:
-	typedef std::map<uint8_t, MBSL_NS::shared_ptr<MBVirtualRTUSlave> > m_slavelist_type;
+	typedef std::map<uint8_t, std::shared_ptr<MBVirtualRTUSlave> > m_slavelist_type;
 public:
 	MBSlaveList(){}
 	virtual ~MBSlaveList(){};
@@ -70,20 +53,21 @@ public:
 	 * Add new slave object to internal list
 	 * @param newSlave:	pointer to slave object
 	 */
-	virtual bool addSlave(MBSL_NS::shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
+	virtual bool addSlave(std::shared_ptr<MBVirtualRTUSlave> newSlave) = 0;
 
 	/**
 	 * Remove slave object from internal list
 	 * @param index:	index of slave to remove
 	 * @return	pointer of removed object
 	 */
-	virtual MBSL_NS::shared_ptr<MBVirtualRTUSlave> removeSlave(uint8_t index) = 0;
+	virtual std::shared_ptr<MBVirtualRTUSlave> removeSlave(uint8_t index) = 0;
 
 	/**
 	 * Remove all slave object from internal list
 	 */
-	void removeAllSlaves(){
-		MBSL_NS::lock_guard<MBSL_NS::mutex> lock(*m_slavelist_lock.get()); //lock isMBSlaveList
+	void removeAllSlaves()
+	{
+		std::lock_guard<std::mutex> lock(*m_slavelist_lock.get()); //lock isMBSlaveList
 		m_slavelist.clear();
 	}
 
@@ -92,7 +76,7 @@ public:
 	 * @param index:	index of requested slave
 	 * @return			pointer to slave object
 	 */
-	virtual MBSL_NS::shared_ptr<MBVirtualRTUSlave> getSlave(uint8_t index) = 0;
+	virtual std::shared_ptr<MBVirtualRTUSlave> getSlave(uint8_t index) = 0;
 
 	/**
 	 * Get pointer to whole slavelist
@@ -110,7 +94,7 @@ protected:
 	/**
 	 * lock for slavelist
 	 */
-	MBSL_NS::shared_ptr<MBSL_NS::mutex>	m_slavelist_lock;
+	std::shared_ptr<std::mutex>	m_slavelist_lock;
 };
 
 } /* namespace MB_Framework */

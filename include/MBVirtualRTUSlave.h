@@ -28,30 +28,20 @@
 #ifndef MBVIRTUALRTUSLAVE_H_
 #define MBVIRTUALRTUSLAVE_H_
 
-#include <MB_Framework_config.h>
-
 #include "stdint.h"
 #include <map>
 
-#ifdef MBVS_NS
-#error "namespace constant 'MBVS_NS' already defined"
-#endif
-
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	#include <memory>
-	#define MBVS_NS std
-#else
-	#include <boost/shared_ptr.hpp>
-	#define MBVS_NS boost
-#endif
+/* C++11 */
+#include <memory>
 
 #include <MBHandlerInt.h>
 #include <MBDatabase.h>
+#include <map>
 
 namespace icke2063 {
 namespace MB_Framework {
 
-typedef std::map<uint16_t,MBVS_NS::shared_ptr<MBHandlerInt> > m_handlerlist_type;
+typedef std::map<uint16_t,std::shared_ptr<MBHandlerInt> > m_handlerlist_type;
 
 class MBVirtualRTUSlave {
 public:
@@ -60,7 +50,7 @@ public:
 	uint8_t getSlaveAddr(void){return _SlaveAddr;}
 	virtual uint8_t getType( void ){return 0xFF;}
 
-	MBVS_NS::shared_ptr<MB_Database> getDB(){return db;}
+	std::shared_ptr<MB_Database> getDB(){return db;}
 
 	/**
 	 * In these lists are the handler objects stored which are called on each
@@ -80,7 +70,7 @@ protected:
 	 * the modbus/TCP requests. If the response is created on the fliy there is not
 	 * used.
 	 */
-	MBVS_NS::shared_ptr<MB_Database> db;
+	std::shared_ptr<MB_Database> db;
 
 private:
 	/**

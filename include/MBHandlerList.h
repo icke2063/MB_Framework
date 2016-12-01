@@ -28,25 +28,13 @@
 #ifndef MBHANDLERLIST_H_
 #define MBHANDLERLIST_H_
 
-#include <MB_Framework_config.h>
-
 #include "stddef.h"
 #include "stdint.h"
 #include "list"
 
-#ifdef MBHL_NS
-#error "namespace constant 'MBHL_NS' already defined"
-#endif
-
-#ifndef ICKE2063_MBFRAMEWORK_NO_CPP11
-	#include <memory>
-	#include <mutex>
-	#define MBHL_NS std
-#else
-	#include <boost/shared_ptr.hpp>
-	#include <boost/scoped_ptr.hpp>
-	#define MBHL_NS boost
-#endif
+/** C++11 */
+#include <memory>
+#include <mutex>
 
 #include <MBHandlerInt.h>
 
@@ -61,11 +49,11 @@ public:
 	/**
 	 * list of known handler objects
 	 */
-	std::list<MBHL_NS::shared_ptr<MBHandlerInt> >			m_handlerlist;
+	std::list<std::shared_ptr<MBHandlerInt> >			m_handlerlist;
 	/**
 	 * lock for handler list
 	 */
-	MBHL_NS::shared_ptr<MBHL_NS::mutex> 			m_handlerlist_lock;		// lock for slavelist
+	std::shared_ptr<std::mutex> 			m_handlerlist_lock;		// lock for slavelist
 
 };
 
