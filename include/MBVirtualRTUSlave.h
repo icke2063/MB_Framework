@@ -30,6 +30,7 @@
 
 #include "stdint.h"
 #include <map>
+#include <list>
 
 /* C++11 */
 #include <memory>
@@ -42,6 +43,8 @@ namespace icke2063 {
 namespace MB_Framework {
 
 typedef std::map<uint16_t,std::shared_ptr<MBHandlerInt> > m_handlerlist_type;
+typedef std::list<std::shared_ptr<MBBlockInt> > m_blocklist_type;
+
 
 class MBVirtualRTUSlave {
 public:
@@ -62,6 +65,14 @@ public:
 
 	m_handlerlist_type m_input_handlerlist;
 	m_handlerlist_type m_holding_handlerlist;
+
+	/**
+	 * These list hold all configured block lists
+	 *
+	 */
+	m_blocklist_type m_input_blocklist;
+	m_blocklist_type m_holding_blocklist;
+
 
 protected:
 	/*

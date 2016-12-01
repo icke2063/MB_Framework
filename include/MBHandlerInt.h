@@ -29,6 +29,9 @@
 #define MBHANDLERINT_H_
 #include <stdint.h>
 
+/* C++11 */
+#include <memory>
+
 namespace icke2063 {
 namespace MB_Framework {
 
@@ -167,6 +170,33 @@ private:
 	 * stop of handler associated area
 	 */
 	uint16_t rstop;
+};
+
+/**
+ * @class handlerBlock object
+ *
+ *
+ */
+class MBBlockInt
+{
+public:
+    MBBlockInt( std::shared_ptr<MBHandlerInt> handler, 
+    uint16_t startAddr, uint16_t endAddr ):
+        _startAddr(startAddr), _endAddr(endAddr), _handler(handler){}
+
+    virtual ~MBBlockInt(){}
+    std::shared_ptr<MBHandlerInt> getHandler( void )
+    {
+	return _handler;
+    }
+
+    uint16_t getStartAddr( void ){ return _startAddr; }
+    uint16_t getEndAddr( void ){ return _endAddr; }
+
+private:
+    std::shared_ptr<MBHandlerInt> _handler;
+    uint16_t _startAddr;
+    uint16_t _endAddr;
 };
 
 } /* namespace MB_Framework */
